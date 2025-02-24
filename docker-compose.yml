@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  flask_app:
+    image: ashor11/flask_as:v1  # Flask Image
+    container_name: flask_container
+    restart: always
+    ports:
+      - "8000:8000"  # Map port 100 on host to port 3000 in container
+    networks:
+      - flask_network
+    volumes:
+        - count_vol:/home/docker_started_lap/Flask-app-docker/
+
+  node_js_app:
+    image: mynodejs:v # nodejs Image
+    container_name: node_js
+    restart: always
+    ports:
+       - "3000:3000"
+      # Map port 80 on host to port 8000 in container
+    networks:
+      - app_network
+volumes:
+  count_vol:
+
+networks:
+  app_network:
+  flask_network:
+
