@@ -16,18 +16,16 @@ This project automates the deployment of Dockerized Node.js and Flask applicatio
 📌 Prerequisites
 
 1️⃣ Install Ansible
-
 sudo apt update && sudo apt install -y ansible
 
+
 2️⃣ Install VMware Workstation (On-Prem Only)
-
 Download from VMware and create a Linux VM.
-3️⃣ Configure AWS CLI
 
+3️⃣ Configure AWS CLI
 aws configure
 
 4️⃣ Update EC2 Security Group
-
 Allow ports 22, 3000, and 8000 for SSH & app access through HTTP.
 
 📜 File Structure
