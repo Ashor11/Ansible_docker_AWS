@@ -14,6 +14,7 @@ This project automates the deployment of Dockerized Node.js and Flask applicatio
     AWS IAM - Authentication
 
 📌 Prerequisites
+
 1️⃣ Install Ansible
 
 sudo apt update && sudo apt install -y ansible
