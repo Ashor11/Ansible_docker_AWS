@@ -1,0 +1,69 @@
+- name: Deploy Node.js and Flask Apps using Docker Compose on AWS EC2 and ON_PRIM
+  hosts: all
+  become: yes  # Run as sudo
+  tasks:
+    - name: Install necessary packages if dosent exist (Docker, Git, Docker Compose)
+      ansible.builtin.yum:
+        name:
+          - docker
+          - git
+          - python3-pip
+        state: present
+      when: "'ec2' in group_names"
+
+    - name: Start and enable Docker service or makes sure it's up
+      ansible.builtin.systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add ec2-user to the Docker group if Ec2
+      ansible.builtin.user:
+        name: ec2-user
+        groups: docker
+        append: yes
+      when: "'ec2' in group_names"
+
+    - name: Clone the GitHub repository
+      ansible.builtin.git:
+        repo: "https://github.com/yamori/nodejs_hello_world_dockered.git"
+        dest: /home/nodejs_app
+        version: main  # Change branch if needed
+
+    - name: Build Docker from cloned Dockerfile
+      ansible.builtin.command:
+        cmd: docker build -t mynodejs:v .
+        chdir: /home/nodejs_app
+
+    - name: Pull Docker Image
+      command: sudo docker pull ashor11/flask_as:v1
+
+    - name: Create Docker Compose directory
+      ansible.builtin.file:
+        path: /home/docker-compose-app
+        state: directory
+        mode: '0755'
+
+    - name: Copy docker-compose.yml to the server
+      ansible.builtin.copy:
+        src: ./docker-compose.yml  # Ensure this file is in your Ansible directory
+        dest: /home/docker-compose-app/docker-compose.yml
+        mode: '0644'
+
+    - name: Deploy Applications using Docker Compose to ON_PRIM
+      ansible.builtin.command:
+        cmd: docker compose up
+        chdir: /home/docker-compose-app
+      when: "'target1' in group_names"
+
+    - name: Deploy Application using Docker compose to EC2
+      ansible.builtin.command:
+        cmd: sudo docker-compose up -d
+        chdir: /home/docker-compose-app
+      when: "'ec2' in group_names"
+~                                                                                                                                                                                              
+~                                                                                                                                                                                              
+~                                                                                                                                                                                              
+~                                                                                                                                                                                              
+~                                                                                                                                                                                              
+~                                                                      
