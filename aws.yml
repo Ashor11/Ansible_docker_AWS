@@ -1,8 +1,8 @@
-- name: Deploy Node.js and Flask Apps using Docker Compose on AWS EC2 and ON_PRIM
+- name: Deploy Node.js and Flask Apps using Docker Compose on AWS EC2 and target1
   hosts: all
   become: yes  # Run as sudo
   tasks:
-    - name: Install necessary packages if dosent exist (Docker, Git, Docker Compose)
+    - name: Install necessary packages if dosent exist (Docker, Git, python)
       ansible.builtin.yum:
         name:
           - docker
@@ -27,13 +27,13 @@
     - name: Clone the GitHub repository
       ansible.builtin.git:
         repo: "https://github.com/yamori/nodejs_hello_world_dockered.git"
-        dest: /home/nodejs_app
+        dest: /home/nodejs_app 
         version: main  # Change branch if needed
 
     - name: Build Docker from cloned Dockerfile
       ansible.builtin.command:
         cmd: docker build -t mynodejs:v .
-        chdir: /home/nodejs_app
+        chdir: /home/nodejs_app 
 
     - name: Pull Docker Image
       command: sudo docker pull ashor11/flask_as:v1
@@ -49,8 +49,8 @@
         src: ./docker-compose.yml  # Ensure this file is in your Ansible directory
         dest: /home/docker-compose-app/docker-compose.yml
         mode: '0644'
-
-    - name: Deploy Applications using Docker Compose to ON_PRIM
+# accourding to diffrent docker compose virsions through the divices we solve that by the below conditions 
+    - name: Deploy Applications using Docker Compose to target 1
       ansible.builtin.command:
         cmd: docker compose up
         chdir: /home/docker-compose-app
