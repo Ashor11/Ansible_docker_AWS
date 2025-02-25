@@ -6,7 +6,7 @@ services:
     container_name: flask_container
     restart: always
     ports:
-      - "8000:8000"  # Map port 100 on host to port 3000 in container
+      - "8000:8000"  # Map port 8000 on host to port 8000 in container
     networks:
       - flask_network
     volumes:
@@ -18,7 +18,7 @@ services:
     restart: always
     ports:
        - "3000:3000"
-      # Map port 80 on host to port 8000 in container
+      # Map port 3000 on host to port 3000 in container
     networks:
       - app_network
 volumes:
