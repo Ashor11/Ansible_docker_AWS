@@ -87,13 +87,13 @@ cd your-repo
 
 2️⃣ Configure Inventory (inventory)
 
-Update with EC2 public IP & On-Prem VM IP.
+Update with EC2 public IP & targets VM IP.
 
 [ec2]
 ec2-instance ansible_host=34.241.237.12 ansible_user=ec2-user ansible_private_key_file=/home/ansible/.ssh/demo_docker.pem
 
-[onprem]
-onprem-vm ansible_host=192.168.1.100 ansible_user=vmuser ansible_ssh_private_key_file=/home/ansible/.ssh/onprem.pem
+[targets]
+target1 ansible_host=192.168.1.100 ansible_user=ansible 
 
 3️⃣ Run Ansible Playbook
 
@@ -104,5 +104,5 @@ ansible-playbook -i inventory playbook.yml
 docker ps
 curl http://your-ec2-public-ip:8000  # Flask (EC2)
 curl http://your-ec2-public-ip:3000  # Node.js (EC2)
-curl http://private_ip:8000       # Flask (On-Prem)
-curl http://privaet_ip:3000       # Node.js (On-Prem)
+curl http://private_ip:8000       # Flask (target1)
+curl http://privaet_ip:3000       # Node.js (target1)
