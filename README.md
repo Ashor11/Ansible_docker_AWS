@@ -1,6 +1,8 @@
 🚀 Deploying Node.js & Flask Apps Using Docker Compose on AWS EC2 & On-Prem (VMware)
 📖 Overview
 
+![25 02 2025_07 48 53_REC](https://github.com/user-attachments/assets/99ced93b-b834-4f1b-b3e8-945cb9852a02)
+
 This project automates the deployment of Dockerized Node.js and Flask applications on AWS EC2 and On-Prem (VMware Workstation) using Ansible and Docker Compose.
 🛠 Tech Stack
 
